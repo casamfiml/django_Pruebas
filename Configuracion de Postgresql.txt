@@ -1,0 +1,561 @@
+9.6 main    5432 down   postgres /var/lib/postgresql/9.6/main /var/log/postgresql/postgresql-9.6-main.log
+
+
+Cambie a la cuenta postgres en su servidor escribiendo:
+
+    sudo -i -u postgres
+    para aumentar un role
+    CREATE USER na1006413;
+
+    CREATE DATABASE django OWNER na1006413;
+
+psql
+Si ha iniciado sesión como cuenta postgres, puede crear un nuevo usuario escribiendo:
+
+    createuser --interactive
+
+Si, en cambio, prefiere utilizar sudo para cada comando sin cambiar de su cuenta normal, puede escribir:
+
+    sudo -u postgres createuser --interactive
+
+El script le pedirá algunas opciones y, en base a sus respuestas, ejecute los comandos Postgres correctos para crear un usuario según sus especificaciones.
+
+Output
+Enter name of role to add: sammy
+Shall the new role be a superuser? (y/n) y
+
+Puede obtener más control pasando algunas banderas adicionales. Eche un vistazo a las opciones mirando la página de manual:
+
+    man createuser
+
+_______________________Para crear parte de los archivos de configuracion de Python con Postgresql____________________
+Run the following in your console:
+
+(myvenv) ~/djangogirls$ pip install psycopg2
+
+If that goes well, you'll see something like this
+
+Downloading/unpacking psycopg2
+Installing collected packages: psycopg2
+Successfully installed psycopg2
+Cleaning up...
+
+Once that's completed, run python -c "import psycopg2". If you get no errors, everything's installed successfully.
+
+como se creo una nueva base de datos entonces se debe utilizar el comando para crear un nuevo superusaurio
+
+**********python manage.py createsuperuser --username na1006413
+Si se tiene problemas de authenticacion localmente
+
+https://stackoverflow.com/questions/36214127/django-db-utils-operationalerror-fe-sendauth-no-password-supplied
+______________Instalacion de Postgresql____________________
+
+____________CheatSheet de Python________________________
+True
+>>> 1 == 1
+True
+>>> 5 != 2
+participant['favorite_language'] = 'Python'
+participant = {'name': 'Ola', 'country': 'Poland', 'favorite_numbers': [7, 42, 92]}
+>>> 3 > 2 and 2 < 1
+False
+>>> 3 > 2 or 2 < 1
+
+--------------------Para condicionales
+    def hi(name):
+        if name == 'Ola':
+            print('Hi Ola!')
+        elif name == 'Sonja':
+            print('Hi Sonja!')
+        else:
+            print('Hi anonymous!')
+
+    hi("Ola")
+
+
+--------------------Para listado
+def hi(name):
+        print('Hi ' + name + '!')
+
+    girls = ['Rachel', 'Monica', 'Phoebe', 'Ola', 'You']
+    for name in girls:
+        hi(name)
+        print('Next girl')
+
+--------Para rangos
+for i in range(1, 6):
+    print(i)
+
+-------Para setear un ambiente virtual
+---------Se debe instalar entonces python3 -m venv myvenv
+        ********sudo apt-get install python3-venv
+        ********sudo apt-get install python3.4-venv
+para instalar las variables de entorno
+--------python3 -m venv myvenv
+
+queremos hacer ahora es iniciarlo ejecutando:
+
+**********************C:\Users\Name\djangogirls> myvenv\Scripts\activate**************************
+
+en Windows, o:
+
+~/djangogirls$ source myvenv/bin/activate
+Cuando trabajes en un entorno virtual, python automáticamente se referirá a la versión correcta, 
+de modo que puedes utilizar python en vez de python3.
+
+-------Ahora se instala el cuerpo de django
+
+En la consola debes ejecutar (recuerda no escribir (myvenv) ~/djangogirls$, ¿ok?):
+
+--------Esto es para crear EL SITIO
+(myvenv) ~/djangogirls$ django-admin startproject mysite .
+
+En Windows:
+
+---Crear un nuevo projecto
+(myvenv) C:\Users\Name\djangogirls> django-admin.py startproject mysite .
+
+
+------Para saber las versiones de los paquetes instalados
+ pip freeze
+
+
+-------En que parte se encuentra el archivo de configuracion de python
+which django-admin.py
+
+https://pixabay.com/en/photos/?q=movistar&hp=&image_type=&cat=&min_width=&min_height=
+¿Que es manage.py?
+manage.py es un script que ayuda con la administración del sitio. Con ello 
+podremos iniciar un servidor web en nuestro ordenador sin necesidad de instalar 
+nada más, entre otras cosas.
+--------Modifica el Huso horario
+---archivo: mysite/settings.py
+TIME_ZONE = 'America/Guayaquil'
+
+-----Agregamos rutas para archivos estaticos
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+
+---- Ejecutando este comando se MIGRA la base de datos descrita en el settings.py
+python manage.py migrate
+
+------ De esta manera en cambio se ejecuta el servidor web
+(myvenv) ~/djangogirls$ python manage.py runserver
+
+------Para crear un blog basado en Objetos
+Creando una aplicación
+
+--------------Para mantener todo en orden, crearemos una aplicación separada dentro de nuestro proyecto.
+--------------Es muy bueno tener todo organizado desde el principio.
+----De esta manera se crea un blog
+
+********Aquí se crean en cambio las apps dentro de la carpeta
+python manage.py startapp blog
+
+----------Después de crear una aplicación también necesitamos decirle a Django que debe utilizarla
+Editar el archivo mysite/settings.py
+    INSTALLED_APPS = (
+        'django.contrib.admin',
+        'django.contrib.auth',
+        'django.contrib.contenttypes',
+        'django.contrib.sessions',
+        'django.contrib.messages',
+        'django.contrib.staticfiles',
+        'blog',
+    )
+
+-----------En el archivo blog/models.py definimos todos 
+----------los objetos llamados Models - este es un lugar en el cual
+------ definiremos nuestro modelo post.
+-----Archivo: blog/models.py
+    from django.db import models
+    from django.utils import timezone
+
+    class Post(models.Model):
+        author = models.ForeignKey('auth.User',on_delete=models.CASCADE,)
+        ******https://stackoverflow.com/questions/44026548/getting-typeerror-init-missing-1-required-positional-argument-on-delete****
+        ******author = models.ForeignKey('auth.User')
+        title = models.CharField(max_length=200)
+        text = models.TextField()
+        created_date = models.DateTimeField(
+                default=timezone.now)
+        published_date = models.DateTimeField(
+                blank=True, null=True)
+
+        def publish(self):
+            self.published_date = timezone.now()
+            self.save()
+
+        def __str__(self):
+            return self.title
+
+******* El from o import son líneas para añadir algo de otros archivos
+********class Post(models.Model): - esta línea define nuestro modelo (es un objeto).
+********models.Model significa que Post es un modelo de Django, así Django sabe 
+********que debe guardarlo en la base de datos.
+
+--------Tipos de Modelos
+
+    models.CharField - así es como defines un texto con un número limitado de caracteres.
+    models.TextField - esto es para textos largos sin un límite. Será ideal para el 
+                        contenido de un post, ¿verdad?
+    models.DateTimeField - esto es fecha y hora.
+    modelos.ForeignKey - este es un vínculo con otro modelo.
+-------mas en: https://docs.djangoproject.com/en/2.0/ref/models/fields/#field-types
+
+-----Metodo para publicar def publish(self):
+-----Metodo que devuelve un string 
+        def __str__(self):
+            return self.title
+
+
+
+
+--------Para que funcione nuestra nueva app de blog
+python manage.py makemigrations blog
+python manage.py migrate blog
+
+
+
+
+
+
+-------Para agregar, editar y borrar los posts que hemos modelado,
+------- utilizaremos el administrador de Django.
+Archivo blog/admin.py
+    from .models import Post
+
+    admin.site.register(Post)
+
+---De esta manera le decimos a Django que registre nuestra pagina
+
+----Ahora ya podemos correr en el servidor nuestra aplicacion
+
+python manage.py runserver
+
+------En la pagina localhost:8000/admin/ se debe desplegar un inicio de sessions
+---Por defecto a Django se accede con permisos de administrador para lo cual debemos agregar
+---dicho usuario
+(myvenv) ~/djangogirls$ python manage.py createsuperuser
+Username: admin
+Email address: admin@admin.com
+Password:
+Password (again):
+Superuser created successfully.
+
+---Mas sobre el temahttps://docs.djangoproject.com/en/2.0/ref/contrib/admin/
+
+
+----Para subir el codigo a git hub se debe hacer de la siguiente manera
+---Despues de instalar git
+…or create a new repository on the command line
+
+echo "# my-first-blog" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git remote add origin https://github.com/casamfiml/my-first-blog.git
+git push -u origin master
+
+…or push an existing repository from the command line
+
+git remote add origin https://github.com/casamfiml/my-first-blog.git
+git push -u origin master
+
+-----------Despues de crear una cuenta en pythoneverywhere debemos introducir los siguientes comandos
+----------para clonar nuestro repositorio de git
+20:20 ~ $ cd my-first-blog
+
+20:20 ~ $ virtualenv --python=python3.4 myvenv
+Running virtualenv with interpreter /usr/bin/python3.4
+[...]
+Installing setuptools, pip...done.
+
+20:20 ~ $ source myvenv/bin/activate
+
+(myvenv)20:20 ~ $  pip install django==1.8 whitenoise
+
+-----django debe revisar todos los ficheres estaticos para lo cual se realizará lo siguiente
+python manage.py collectstatic
+
+----- Se debe configurar la base de datos para que actue de manera remota en el servidor
+-------para lo cual se deben crear superusarios
+python manage.py migrate
+y
+python manage.py createsuperuser
+
+----------Ahora que nuestro código está en PythonAnywhere, 
+----------el virtualenv está listo, los ficheros estáticos han sido recopilados 
+----------y la base de datos está inicializada, estamos listas para publicarla 
+----------como una aplicación web.
+-----ahora se edita el archivo WSGI para que sea visible en la parte de web development
+******en caso de existir algun error revisar
+******https://stackoverflow.com/questions/15097155/django-apache-mod-wsgi-500
+------Aqui se aplica la forma 
+/home/kasam/my-first-blog/myvenv/lib/python3.4/site-packages/django/http/request.py 
+
+
+-----Entendiendo para que sirve el archivo URLs, para lo cual se usa REGEX
+//////Puede ser error***** la version de Python 3.4 ya no contiene REGEX, se debe tomar precauciones en el codigo
+urlpatterns = [
+    url('admin/', admin.site.urls),
+    url('', include('blog.urls')),
+    ]
+
+def post_list(request):
+    return render(request, 'blog/post_list.html', {})
+
+-----para reflejar los cambios en pythonanywhere debemos entonces realziar lo siguiente
+-----estando en la carpeta de origin de github de nuestro proyecto debemos escribir el siguiente
+---codigo en consola ara activar nuestro espacio virtual
+source myvenv/bin/activate
+git pull 
+python manage.py collectstatic
+
+ORM de Django y QuerySets
+
+En este capítulo aprenderás cómo Django se conecta a la base de datos 
+y almacena los datos en ella. ¡Vamos a sumergirnos!
+¿Qué es un QuerySet?
+
+Un QuerySet es, en esencia, una lista de objetos de un modelo determinado. 
+Un QuerySet te permite leer los datos de una base de datos, filtrarlos y ordenarlos.
+
+para abrir el shell de manage.py
+****************************python manage.py shell****************************************
+una vez dentro debemos exportar nuestro modelo con:
+----Para poder visualizar nuestro modelos
+from blog.models import Post
+------Muestra los Post creados
+Post.objects.all()
+------Para insertar un Post, como esta creado con un atributo User, debemos importar este tipo de datos
+from django.contrib.auth.models import User
+User.objects.all()
+----------para asignar una variable
+me = User.objects.get(username='ola')
+--------------------------Ahora si se pueden insertar nuevos posts
+Post.objects.create(author=me,tittle='Sample Title',text='Test de pruebas internas')
+--------Podemos filtrar el codigo con
+Post.objects.filter(title__contains='title')
+
+
+********Se muestran partes de como filtrar y ordenar los post que se publiquen en la app
+------Primero Se importa la libreria de Timezone
+from django.utils import timezone
+----Luego se filtro por la fecha de publicación
+Post.objects.filter(published_date__lte=timezone.now())
+-------------ahora se procede a guardar un post como una variable
+post = Post.objects.get(id=1)
+------------------y se invoca al metodo de publish de nuestro objeto
+post.publish()
+-----Con esto se puede vovler a filtrar
+Post.objects.filter(published_date__lte=timezone.now())
+-------Se puede ordenar por fecha en la que fue creado
+Post.objects.order_by('created_date')
+Post.objects.order_by('-created_date')
+
+
+
+----------------Breve explicacion de como funciona el MVC----------------------
+----------------Datos dinámicos en las plantillas
+
+----------------Tenemos diferentes piezas en su lugar: el modelo Post está definido en models.py
+----------------, tenemos a post_list en views.py y la plantilla agregada.
+ ----------------¿Pero cómo haremos realmente para que nuestros posts aparezcan en nuestra plantilla HTML?
+  ----------------Porque eso es lo que queremos hacer: tomar algún contenido 
+  ----------------(modelos guardados en la base de datos) y mostrarlo adecuadamente en nuestra plantilla, ¿no?
+----------------Esto es exactamente lo que las views se supone que hacen: conectar modelos con plantillas.
+ ----------------En nuestra view post_list necesitaremos tomar los modelos que deseamos mostrar y pasarlos 
+ ----------------a una plantilla. Así que básicamente en una view decidimos qué (modelo) se mostrará en una
+  ----------------plantilla.
+----Entonces se edita el archivo de vistas views.py
+from django.shortcuts import render
+from .models import Post
+from django.utils import timezone
+
+# Create your views here.
+def post_list(request):
+    posts = Post.objects.filter(published_date__lte= timezone.now()).order_by('published_date')
+    return render(request, 'blog/post_list.html', {'posts':posts})
+
+---ahora podemos en las vistas configurar para que se visualicen nuestros posts
+---------modificando nuestro archivo post_list.html
+            {% for post in posts %}
+            <div>
+                <p>publicado el: {{post.published_date}}</p>
+                <h1><a href="">{{post.title}}</a></h1>
+                <p>{{post.text | linebreaksbr}}</p>
+            </div>
+            {% endfor %}
+
+-----Para los estilos en este caso se van a usar bootstrap, por lo que se tendrá
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+
+----ahora para poner estilos debemos decirle a Django que el archivo es static y que el mismo esta
+-------ubicado en la siguiente direccion
+blog/static/css/blog.css
+----------------------------------------------Lo cargamos en nuestro html
+{% load staticfiles %}
+<link rel="stylesheet" href="{% static 'css/blog.css' %}">
+
+
+------Ahora para configurar la parte de templates de html, se puede realizar una base y cambiar solo
+-----bloques de codigo
+*****En la plantilla base
+                {% block content %}
+                {% endblock %}
+
+******en el html que visualizar
+{% extends 'blog/base.html' %}
+    {% block content %}
+    {% endblock %}
+
+
+
+*********comandos básicos para iniciar una aplicación en Django
+1.- Crear un entorno virtual
+    sudo apt-get install python3-venv
+2.- Setear las variables de entorno
+    python3 -m venv myvenv
+3.- Activar las variables
+    source myvenv/bin/activate
+4.- Instalar Django
+5.- Instalar el sitio de Django
+    django-admin startproject mysite .
+6.- Agregar una App al projecto
+    python manage.py startapp blog
+7.- Editamos el archivo settings.py
+    INSTALLED_APPS = ['reporter',]
+8.- Creamos un Modelo
+    class Incidences(models.Model):
+        name = models.CharField(max_length=20)
+        def __unicode__(self):
+            return self.__name__
+9.- Exportamos el modelo en el Backend
+    python manage.py migrate
+10.- Creamos un usuario con permisos de administrador
+    python manage.py createsuperuser
+11.- Editamos reporter/admin.py
+    class IncidencesAdmin(admin.ModelAdmin):
+        pass
+
+    admin.site.register(Incidences,IncidencesAdmin)
+12.- Desplegamos los cambios al admin.py
+    python manage.py makemigrations
+13.- Creamos la migracion
+    python manage.py migrate
+14.- Desplegamos el servicio
+    python manage.py runserver
+14.1.- Quitar un s en el admin
+    class Meta:
+        verbose_name_plural = 'Incidences'
+15.- Ahora cambios la base de datos a Postgres
+    DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'django',
+        'USER': 'na1006413',
+        #'PASSWORD': '',
+        #'HOST': 'localhost',
+        #'PORT': '',
+    }
+    }
+16. Instalar psycopg2
+    pip install psycopg2
+16.1. Confirmar el paquete instalados
+    pip freeze
+16.2. Llevamos nuestro modelo a la base de datos 
+    python manage.py migrate
+16.3. Podemos entrar a la base de datos con
+    sudo -i -u postgres
+        psql
+        \l
+    V psql -U postgres -l
+    V psql -U postgres -d postgres
+    comandos utilizaremos
+        \c agricom       ---Para cambiar de base de datos
+        \d ---------------para ver todas las tablas
+        \d table ---------------para ver la informacion específica de la tabla
+        TRUNCATE TABLE table RESTART IDENTITY -------- para eliminar una tabla
+        DROP TABLE tablename; PARA ELIMINAR UNA tabla
+        COPY (SELECT * FROM tablename) TO '/home/tablename.csv' WITH DELIMITER '|'; --- Enviar resultados de un archivo delimitado por comandos
+        Mas comandos http://viviryaprenderweb.com/postgres-comandos-basicos-segunda-lista/
+
+17. Instalamos la base de datos Postgresql como esta anteriormente descrito
+---------18. Instalamos Postgis para el manejo de datos espaciales
+    sudo apt-get install Postgis
+19. Ahora debemos habilitar el complemento
+19.1. Para ver que proceso de postgresql esta corriendo
+    dpkg -l | grep postgres
+19.2 Eliminar las versiones anteriores de Postgresql
+    sudo apt-get --purge remove postgresql-10 postgresql-client-10 postgresql-client-common
+     postgresql-common postgresql-contrib postgresql-contrib-10
+19.3 Instalar la version mas actual
+    sudo apt-get install postgresql
+19.3.1. Para Iniciar el Servidor de Postgresql
+    /usr/lib/postgresql/10/bin/pg_ctl -D /var/lib/postgresql/10/main -l logfile start
+19.3.2. Para ingresar como el usuario de la base de datos
+    sudo -i -u postgres
+20. Instalamos Postgis con postgresql
+     sudo apt-get install postgis postgresql
+:_________________________________Para GEODjango________________________________________:::::::::::::::::
+sudo apt-get install python3
+sudo apt-get install python3-pip
+python3 -m venv myvenv
+source myvenv/bin/activate
+sudo pip install virtualenv
+pip install django
+django-admin startproject geo .
+python manage.py migrate
+python manage.py createsuperuser
+sudo apt-get install binutils libproj-dev gdal-bin
+GEOS
+    wget http://download.osgeo.org/geos/geos-3.4.2.tar.bz2
+Todas las geolibs
+    https://docs.djangoproject.com/es/2.0/ref/contrib/gis/install/geolibs/
+
+wget http://download.osgeo.org/gdal/CURRENT/gdal-2.2.3.tar.gz
+postgresql-x.x, postgresql-x.x-postgis, postgresql-server-dev-x.x, python-psycopg2
+sudo apt-get install postgresql-10.1 postgresql-10.1-postgis postgresql-server-dev-10.1 python3-psycopg2
+
+Instalar pip install django-raster
+
+---------------------Para C9.io-------------------
+python manage.py runserver $IP:$PORT
+
+
+-------------Para configurar el servidor Apache2 en Ubuntu--------------
+https://devops.profitbricks.com/tutorials/install-and-configure-mod_wsgi-on-ubuntu-1604-1/
+https://askubuntu.com/questions/828779/failed-to-add-run-systemd-ask-password-to-directory-watch-no-space-left-on-dev
+https://www.digitalocean.com/community/tutorials/how-to-serve-django-applications-with-apache-and-mod_wsgi-on-ubuntu-14-04
+http://rafinguer.blogspot.com/2014/08/configurar-la-concurrencia-en-apache-y.html
+http://soriano-blog.blogspot.com/2012/04/20-consejos-para-proteger-apache.html
+https://serverfault.com/questions/56409/problem-with-deploying-django-application-on-mod-wsgi
+https://docs.djangoproject.com/en/2.0/howto/deployment/wsgi/modwsgi/
+------Editar las variables en caso de error en la version de Python
+https://stackoverflow.com/questions/5930585/how-to-use-python-3-and-django-with-apache
+https://www.enmimaquinafunciona.com/pregunta/24690/por-defecto-python-comando-a-usar-python-3
+
+Para ver los logs en /var/log/apache2
+sudo service apache2 reload
+
+----Para Amazon Web Services
+----Util para instalar la version correcta de python en apache2
+http://blog.enriqueoriol.com/2014/06/lanzando-django-en-produccion-con.html
+
+https://tutorial.djangogirls.org/es/deploy/
+
+-------Para instalar python -m venv desde un archivo text
+pip install -r requirements.txt
+
+
+------Para el Deploy en Heroku-----
+# Configure Django App for Heroku.
+import django_heroku
+django_heroku.settings(locals())
+----revisar de: https://github.com/heroku/django-heroku
+git add .
+git commit -m "Pruebas iniciales"
+git push heroku master
