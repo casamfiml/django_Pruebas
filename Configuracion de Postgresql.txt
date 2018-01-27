@@ -123,7 +123,7 @@ En Windows:
 -------En que parte se encuentra el archivo de configuracion de python
 which django-admin.py
 
-https://pixabay.com/en/photos/?q=movistar&hp=&image_type=&cat=&min_width=&min_height=
+
 ¿Que es manage.py?
 manage.py es un script que ayuda con la administración del sitio. Con ello 
 podremos iniciar un servidor web en nuestro ordenador sin necesidad de instalar 
@@ -525,37 +525,101 @@ Instalar pip install django-raster
 ---------------------Para C9.io-------------------
 python manage.py runserver $IP:$PORT
 
+--------------------------Adjuntar a la Maquina Virtual de Virtual Box-----------
+http://django-map-widgets.readthedocs.io/en/latest/installation/index.html
+https://github.com/erdem/django-map-widgets
+http://jmeter.apache.org/usermanual/get-started.html
+http://www.dma.ulpgc.es/profesores/personal/stat/cursoR4ULPGC/6h-Fechas.html
 
--------------Para configurar el servidor Apache2 en Ubuntu--------------
-https://devops.profitbricks.com/tutorials/install-and-configure-mod_wsgi-on-ubuntu-1604-1/
-https://askubuntu.com/questions/828779/failed-to-add-run-systemd-ask-password-to-directory-watch-no-space-left-on-dev
-https://www.digitalocean.com/community/tutorials/how-to-serve-django-applications-with-apache-and-mod_wsgi-on-ubuntu-14-04
-http://rafinguer.blogspot.com/2014/08/configurar-la-concurrencia-en-apache-y.html
-http://soriano-blog.blogspot.com/2012/04/20-consejos-para-proteger-apache.html
-https://serverfault.com/questions/56409/problem-with-deploying-django-application-on-mod-wsgi
-https://docs.djangoproject.com/en/2.0/howto/deployment/wsgi/modwsgi/
-------Editar las variables en caso de error en la version de Python
-https://stackoverflow.com/questions/5930585/how-to-use-python-3-and-django-with-apache
-https://www.enmimaquinafunciona.com/pregunta/24690/por-defecto-python-comando-a-usar-python-3
-
-Para ver los logs en /var/log/apache2
-sudo service apache2 reload
-
-----Para Amazon Web Services
-----Util para instalar la version correcta de python en apache2
-http://blog.enriqueoriol.com/2014/06/lanzando-django-en-produccion-con.html
-
-https://tutorial.djangogirls.org/es/deploy/
-
--------Para instalar python -m venv desde un archivo text
-pip install -r requirements.txt
+---------Para C9________
+Uso de AngularJS with Django
+https://stackoverflow.com/questions/38366861/django-templatedoesnotexist-rest-framework-api-html
+https://stackoverflow.com/questions/31454607/npm-failed-to-parse-json
 
 
-------Para el Deploy en Heroku-----
-# Configure Django App for Heroku.
-import django_heroku
-django_heroku.settings(locals())
-----revisar de: https://github.com/heroku/django-heroku
-git add .
-git commit -m "Pruebas iniciales"
-git push heroku master
+
+____Integración Continua_____
+ambientes de prueba para poder hacer tester en las versiones de prueba, se necesita
+Ver las features toogle para ver si se necesitan de verdad uno u otro paquete para que esta se active.... chef o Jenkins, para la habilitación de acceso 
+
+Apache2 default
+#Cambios del 21/01/2018 en apache2.conf
+WSGIScriptAlias / /home/ubuntu/workspace/gigfinder/config/wsgi.py
+WSGIPythonHome /home/ubuntu/workspace/myvenv
+WSGIPythonPath /home/ubuntu/workspace/myvenv/lib/python3.6/site-packages
+
+<Directory /home/ubuntu/workspace/gigfinder>
+<Files wsgi.py>
+Require all granted
+</Files>
+</Directory>
+#Fin de Cambios
+
+
+##Cambios en el 000-default
+<VirtualHost *:80>
+	# The ServerName directive sets the request scheme, hostname and port that
+	# the server uses to identify itself. This is used when creating
+	# redirection URLs. In the context of virtual hosts, the ServerName
+	# specifies what hostname must appear in the request's Host: header to
+	# match this virtual host. For the default virtual host (this file) this
+	# value is not decisive as it is used as a last resort host regardless.
+	# However, you must set it for any further virtual host explicitly.
+	#ServerName www.example.com
+
+	ServerAdmin webmaster@localhost
+	DocumentRoot /var/www/html
+
+	# Available loglevels: trace8, ..., trace1, debug, info, notice, warn,
+	# error, crit, alert, emerg.
+	# It is also possible to configure the loglevel for particular
+	# modules, e.g.
+	#LogLevel info ssl:warn
+
+	ErrorLog ${APACHE_LOG_DIR}/error.log
+	CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+	# For most configuration files from conf-available/, which are
+	# enabled or disabled at a global level, it is possible to
+	# include a line for only one particular virtual host. For example the
+	# following line enables the CGI configuration for this host only
+	# after it has been globally disabled with "a2disconf".
+	#Include conf-available/serve-cgi-bin.conf
+#####Configuracion Básica
+Alias /logo-mini.png /home/ubuntu/workspace/gigfinder/static/imgs/logo-mini.png
+Alias /logo.png /home/ubuntu/workspace/gigfinder/static/imgs/logo.png
+Alias /static/ /home/ubuntu/workspace/gigfinder/static/
+
+<Directory /home/ubuntu/workspace/gigfinder/static>
+Require all granted
+</Directory>
+WSGIScriptAlias / /home/ubuntu/workspace/gigfinder/config/wsgi.py
+#WSGIPythonHome /home/ubuntu/workspace/myvenv
+#WSGIPythonPath /home/ubuntu/workspace/myvenv/lib/python3.6/site-packages
+<Directory /home/ubuntu/workspace/gigfinder/config>
+<Files wsgi.py>
+Require all granted
+</Files>
+</Directory>
+
+</VirtualHost>
+
+# vim: syntax=apache ts=4 sw=4 sts=4 sr noet
+
+##INtroducción Básica para AngularJS with DjangoRestFramework
+http://engineroom.trackmaven.com/blog/getting-started-drf-angularjs-part-5/
+
+Para envios Post
+http://tutlane.com/tutorial/angularjs/angularjs-http-post-method-http-post-with-parameters-example
+
+Para guardar campos calculados en Django
+http://estribancus.blogspot.com/2012/10/campos-calculados-en-django.html
+https://www.w3schools.com/howto/howto_js_popup.asp
+https://stackoverflow.com/questions/17109850/update-angular-model-after-setting-input-value-with-jquery
+https://www.w3schools.com/jsref/event_onclick.asp
+http://fdietz.github.io/recipes-with-angular-js/common-user-interface-patterns/displaying-a-loading-spinner.html
+https://github.com/chrisdev/django-pandas
+(, encoding = 'ISO-8859-1')
+http://aprendedjango.blogspot.com/2013/11/modelos-en-django.html
+https://developers.google.com/maps/documentation/javascript/shapes?hl=es-419
+https://stackoverflow.com/questions/44878472/errorinvalidvalueerror-setcenter-not-a-latlng-or-latlngliteral-in-property-l
