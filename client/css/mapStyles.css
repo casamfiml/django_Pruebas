@@ -1,0 +1,212 @@
+/******************* FONTS *********/
+@font-face {
+    font-family: 'Telefonica-Regular';
+    src: url('https://resources.elevenpaths.com/fonts/telefonica/Regular/TelefonicaWeb-Regular.eot');
+    src: url('https://resources.elevenpaths.com/fonts/telefonica/Regular/TelefonicaWeb-Regular.eot?#iefix') format('embedded-opentype'),
+         url('https://resources.elevenpaths.com/fonts/telefonica/Regular/TelefonicaWeb-Regular.woff2') format('woff2'),
+         url('https://resources.elevenpaths.com/fonts/telefonica/Regular/TelefonicaWeb-Regular.woff') format('woff'),
+         url('https://resources.elevenpaths.com/fonts/telefonica/Regular/TelefonicaWeb-Regular.ttf') format('truetype'),
+         url('https://resources.elevenpaths.com/fonts/telefonica/Regular/TelefonicaWeb-Regular.svg#Telefonica') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Telefonica-Bold';
+    src: url('https://resources.elevenpaths.com/fonts/telefonica/Bold/TelefonicaWeb-Bold.eot');
+    src: url('https://resources.elevenpaths.com/fonts/telefonica/Bold/TelefonicaWeb-Bold.eot?#iefix') format('embedded-opentype'),
+         url('https://resources.elevenpaths.com/fonts/telefonica/Bold/TelefonicaWeb-Bold.woff2') format('woff2'),
+         url('https://resources.elevenpaths.com/fonts/telefonica/Bold/TelefonicaWeb-Bold.woff') format('woff'),
+         url('https://resources.elevenpaths.com/fonts/telefonica/Bold/TelefonicaWeb-Bold.ttf') format('truetype'),
+         url('https://resources.elevenpaths.com/fonts/telefonica/Bold/TelefonicaWeb-Bold.svg#TelefonicaBold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Telefonica-Cap';
+    src: url('https://resources.elevenpaths.com/fonts/telefonica/Cap/TelefonicaCapWeb-Regular.eot');
+    src: url('https://resources.elevenpaths.com/fonts/telefonica/Cap/TelefonicaCapWeb-Regular.eot?#iefix') format('embedded-opentype'),
+         url('https://resources.elevenpaths.com/fonts/telefonica/Cap/TelefonicaCapWeb-Regular.woff2') format('woff2'),
+         url('https://resources.elevenpaths.com/fonts/telefonica/Cap/TelefonicaCapWeb-Regular.woff') format('woff'),
+         url('https://resources.elevenpaths.com/fonts/telefonica/Cap/TelefonicaCapWeb-Regular.ttf') format('truetype'),
+         url('https://resources.elevenpaths.com/fonts/telefonica/Cap/TelefonicaCapWeb-Regular.svg#TelefonicaCap') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Telefonica-ExtraLight';
+    src: url('https://resources.elevenpaths.com/fonts/telefonica/ExtraLight/TelefonicaWeb-ExtraLight.eot');
+    src: url('https://resources.elevenpaths.com/fonts/telefonica/ExtraLight/TelefonicaWeb-ExtraLight.eot?#iefix') format('embedded-opentype'),
+         url('https://resources.elevenpaths.com/fonts/telefonica/ExtraLight/TelefonicaWeb-ExtraLight.woff2') format('woff2'),
+         url('https://resources.elevenpaths.com/fonts/telefonica/ExtraLight/TelefonicaWeb-ExtraLight.woff') format('woff'),
+         url('https://resources.elevenpaths.com/fonts/telefonica/ExtraLight/TelefonicaWeb-ExtraLight.ttf') format('truetype'),
+         url('https://resources.elevenpaths.com/fonts/telefonica/ExtraLight/TelefonicaWeb-ExtraLight.svg#TelefonicaExtraLight') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Telefonica-Hand';
+    src: url('https://resources.elevenpaths.com/fonts/telefonica/Hand/TelefonicaWeb-Hand.eot');
+    src: url('https://resources.elevenpaths.com/fonts/telefonica/Hand/TelefonicaWeb-Hand.eot?#iefix') format('embedded-opentype'),
+         url('https://resources.elevenpaths.com/fonts/telefonica/Hand/TelefonicaWeb-Hand.woff2') format('woff2'),
+         url('https://resources.elevenpaths.com/fonts/telefonica/Hand/TelefonicaWeb-Hand.woff') format('woff'),
+         url('https://resources.elevenpaths.com/fonts/telefonica/Hand/TelefonicaWeb-Hand.ttf') format('truetype'),
+         url('https://resources.elevenpaths.com/fonts/telefonica/Hand/TelefonicaWeb-Hand.svg#TelefonicaHand') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Telefonica-Light';
+    src: url('https://resources.elevenpaths.com/fonts/telefonica/Light/TelefonicaWeb-Light.eot');
+    src: url('https://resources.elevenpaths.com/fonts/telefonica/Light/TelefonicaWeb-Light.eot?#iefix') format('embedded-opentype'),
+         url('https://resources.elevenpaths.com/fonts/telefonica/Light/TelefonicaWeb-Light.woff2') format('woff2'),
+         url('https://resources.elevenpaths.com/fonts/telefonica/Light/TelefonicaWeb-Light.woff') format('woff'),
+         url('https://resources.elevenpaths.com/fonts/telefonica/Light/TelefonicaWeb-Light.ttf') format('truetype'),
+         url('https://resources.elevenpaths.com/fonts/telefonica/Light/TelefonicaWeb-Light.svg#TelefonicaLight') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Telefonica-Italic';
+    src: url('https://resources.elevenpaths.com/fonts/telefonica/RegularItalic/TelefonicaWeb-RegularItalic.eot');
+    src: url('https://resources.elevenpaths.com/fonts/telefonica/RegularItalic/TelefonicaWeb-RegularItalic.eot?#iefix') format('embedded-opentype'),
+         url('https://resources.elevenpaths.com/fonts/telefonica/RegularItalic/TelefonicaWeb-RegularItalic.woff2') format('woff2'),
+         url('https://resources.elevenpaths.com/fonts/telefonica/RegularItalic/TelefonicaWeb-RegularItalic.woff') format('woff'),
+         url('https://resources.elevenpaths.com/fonts/telefonica/RegularItalic/TelefonicaWeb-RegularItalic.ttf') format('truetype'),
+         url('https://resources.elevenpaths.com/fonts/telefonica/RegularItalic/TelefonicaWeb-RegularItalic.svg#TelefonicaItalic') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+/* Always set the map height explicitly to define the size of the div
+* element that contains the map. */
+#map 
+{
+	height: 100%;
+}
+/* Optional: Makes the sample page fill the window. */
+html, body 
+{
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	width: 100%; /* full window width */
+    text-align: center;
+	font-family: Telefonica-Regular;
+}
+button
+{
+	background: #5BC500;
+    border-radius: 10%;
+    color: #FFFFFF;
+    border: none;
+    margin: 5px;
+    padding: 10px;
+}
+button:hover
+{
+	transition: .4s linear;
+	-webkit-transition: .4s linear; /* for Safari & Chrome */
+	background: #00A9E0;
+	color: #FFFFFF;
+}
+.controls 
+{
+	margin-top: 10px;
+	border: 1px solid transparent;
+	border-radius: 2px 0 0 2px;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	height: 32px;
+	outline: none;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+#pac-input 
+{
+	background-color: #fff;
+	font-family: Roboto;
+	font-size: 15px;
+	font-weight: 300;
+	margin-left: 12px;
+	padding: 0 11px 0 13px;
+	text-overflow: ellipsis;
+	width: 300px;
+}
+
+#pac-input:focus 
+{
+	border-color: #4d90fe;
+}
+.pac-container 
+{
+	font-family: Roboto;
+}
+
+#type-selector 
+{
+	color: #fff;
+	background-color: #4d90fe;
+	padding: 5px 11px 0px 11px;
+}
+
+#type-selector label 
+{
+	font-family: Roboto;
+	font-size: 13px;
+	font-weight: 300;
+}
+#target 
+{
+	width: 345px;
+}
+.hidden
+{
+	display:none;
+}
+.main-container
+{
+	height:100%;
+	width: 95%;
+	padding: 5px 5px 5px 5px;
+	max-height:660px;
+}
+.title-container
+{
+	width:100%;
+}
+.container
+{
+	display: inline-block;
+	margin:auto;
+	text-align:left;
+	height:95%;
+}
+.menu-container
+{
+	width:30%;
+	float:right;
+}
+.content-container
+{
+	width:65%;
+	float:left;
+	height:550px;
+}
+#instructions
+{
+	width: 100%;
+    height: 300px;
+    background: #00A9E0;
+    color: #FFFFFF;
+    margin-bottom: 10px;
+    border-radius: 10%;
+    padding-top: 10px;
+    padding-left: 20px;
+    padding-right: 10px;
+    text-align: justify;
+}

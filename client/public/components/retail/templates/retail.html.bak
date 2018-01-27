@@ -1,0 +1,40 @@
+		<div class="main-container">
+			<div class="title-container">
+				<h3>Disponibilidad de Servicio para FWA</h3>
+			</div>
+			<div class="menu-container container">
+				<div id="instructions">
+					<h3>Instrucciones</h3>	
+					<p><strong>1. </strong>Seleccionar un punto en el mapa para analizar.</p>
+					<p><strong>2. </strong>Seleccionar el tipo de an&aacute;lisis a realizar.</p>
+					<p><strong>2.1. </strong>Cobertura FWA:<br/>
+						Explain
+					</p>
+					<p><strong>2.2. </strong>Negocios Potenciales:<br/>
+						Explain
+					</p>
+					<p><strong>3. </strong>Hacer clic en <strong><i>Calcular</i></strong>.</p>
+				</div>
+				<div>
+					<button onclick="showFWA();">Cobertura FWA</button>
+				</div>
+				<div>
+					<button onclick="showBusiness();">Negocios Potenciales</button>
+				</div>
+				<div id="input-container" class="hidden">
+					<form>
+						<input id="lat-input" class="controls hidden" type="text" placeholder="latitud">
+						<input id="lon-input" class="controls hidden" type="text" placeholder="longitud">
+						<input id="radius-input" class="controls hidden" type="text" placeholder="radio" onkeyup="calculateRadius();">
+						<button type="button" onclick="calculate();">Calcular</button>
+						<button type="button" onclick="deletePoint();" class="hidden" id="btnDelete">Borrar Selecci&oacute;n</button>
+					</form>
+				</div>
+			</div>
+			<div class="content-container container">
+				<input id="pac-input" class="controls" type="text" placeholder="Search Box">
+				<div id="map"></div>
+				<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB2bYz7bCQmBf5zQU5HyOYZ2K5jVy6sibs&libraries=places&callback=initMap">
+				</script>
+			</div>
+		</div>
