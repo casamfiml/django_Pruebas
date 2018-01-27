@@ -1,0 +1,207 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Disponibilidad de FWA</title>
+  <meta name="description" content="map">
+  <meta name="author" content="Telefonica">
+  <link rel="stylesheet" href="css/mapStyles.css">
+  <script src="js/angular.js"></script>
+  <script src="js/jquery-3.2.1.min.js"></script>
+  <script src="js/functions.js"></script>
+  <script src="js/mapFunctions.js"></script>
+  
+    <script type="text/javascript">
+    
+    var app = angular.module('postserviceApp', []);
+    
+        app.controller('postserviceCtrl', function ($scope, $http) {
+            
+            
+            document.getElementById("myPopup").style.visibility = 'hidden';
+            $scope.latitud = null;
+            $scope.longitud = null;
+            //$scope.respuesta = null;
+            $scope.lblMsg = null;
+            //$scope.getSetAttribute('#longitud').addClass('MyClass');
+            $scope.postdata = function (latitud, longitud,radio) {
+            //$scope.postdata = function (latitud, longitud) {
+                var data = {
+                    latitud: latitud,
+                    longitud: longitud,
+                    radio: radio,
+                    //respuesta: respuesta
+                };
+            $scope.dibujarCirculo = function(){
+                var radius = parseInt(document.getElementById("radio").value);
+                var lat = parseFloat(document.getElementById("latitud").value);
+                var lon = parseFloat(document.getElementById("longitud").value);
+                var punto = {
+                        uno:{
+                            center:{lat:lat,lng:lon }
+                            }
+                        }
+                var cityCircle = new google.maps.Circle({
+                        strokeColor: '#FF0000',
+                        strokeOpacity: 0.8,
+                        strokeWeight: 2,
+                        fillColor: '#FF0000',
+                        fillOpacity: 0.35,
+                        map: map,
+                        center: punto.uno.center,
+                        radius: radius
+                
+                })
+            };
+                
+            //Call the services
+            $http.post('https://django-fwa-casamfiml.c9users.io:8081/maps/', JSON.stringify(data)).then(function (response) {
+                if (response.data)
+                    document.getElementById("myPopup").style.visibility = 'visible';
+                    document.getElementById("ImagenCargando").style.visibility = 'hidden';
+                    document.getElementById("ImagenCarga").style.visibility = 'hidden';
+                    $scope.msg = "Post Data Submitted Successfully!";
+                    $scope.DispFWA = response.data.DispFWA;
+                    //var cadena = response.data.EmprFWA.nombre;
+                    //$scope.EmprFWA = cadena.split('{"');
+                    //$scope.EmprFWA = JSON.stringify(response.data.EmprFWA);
+                    $scope.radio = response.data.radio;
+                    //Ejemplo de Impresion
+                    $scope.EmprFWA = response.data.EmprFWA.latitud;
+                    if (response.data.radio > 50)
+                        $scope.DibujarCirculos(response.data.nombre,response.data.EmprFWA.latitud,response.data.EmprFWA.longitud);
+                    else
+                        $scope.myFunction();
+                    }, function (response) {
+                        $scope.msg = "Datos no ingresados correctamente";
+                        $scope.statusval = response.status;
+                        $scope.statustext = response.statusText;
+                        $scope.headers = response.headers();
+                        $scope.longitud = response.longitud;
+                        $scope.latitud = response.latitud;
+                        //$scope.respuesta = response.respuesta;
+                        $scope.DispFWA = response.data.DispFWA;
+                        $scope.EmprFWA = response.data.EmprFWA;
+                    });
+                    
+            };
+            // Construct the circle for each value in citymap.
+        // Note: We scale the area of the circle based on the population.
+            $scope.DibujarCirculos = function(nombre,latitud,longitud){
+                //console.log(latitud);
+                for (var i=0 ; i < latitud.length ; i++) {
+                    var lat = parseFloat(latitud[i]);
+                    var lon = parseFloat(longitud[i]);
+                    //console.log(lat)
+                    var punto = {
+                        empresa:{
+                            center:{lat:lat,lng:lon }
+                            }
+                        }
+                    console.log(punto);
+          // Add the circle for this city to the map.
+                //console.log(latitud[i]);
+                    var cityCircle = new google.maps.Circle({
+                        strokeColor: '#FF0000',
+                        strokeOpacity: 0.8,
+                        strokeWeight: 2,
+                        fillColor: '#FF0000',
+                        fillOpacity: 0.35,
+                        map: map,
+                        center: punto.empresa.center,
+                        radius: 10
+                });
+                };
+            }
+            
+            $scope.myImagen = function(){
+                var ImagenCargando = document.getElementById("ImagenCargando");
+                //ImagenCargando.classList.toggle("show");
+                ImagenCargando.style.visibility = 'visible';
+                var ImagenCarga = document.getElementById("ImagenCarga");
+                //ImagenCarga.classList.toggle("show");
+                ImagenCarga.style.visibility = 'visible';
+                };
+                
+            $scope.myFunction = function() {
+                var popup = document.getElementById("myPopup");
+                popup.classList.toggle("show");
+                };
+            /* global google*/
+            document.getElementById("ImagenCargando").style.visibility = 'hidden';
+            document.getElementById("ImagenCarga").style.visibility = 'hidden';
+        });
+</script>
+</head>
+<body>
+    <div class="header" style="	background: linear-gradient(#043E66, #80D4F0);">
+        <div class="logo left">
+            <img alt="Movistar" src="imgs/company_logo.png">
+        </div>	
+        <div class="user-logged right">
+            <label id="user-name-logged">Usario: Pruebas</label>
+        </div>
+    </div>
+    <div id="ImagenCargando"><img src="imgs/Circulo-Carga-62157.gif" id="ImagenCarga"></img></div>
+    <div class="main-container">
+        <div class="title-container">
+            <h3>Disponibilidad de Servicio para FWA</h3>
+        </div>
+        <div class="menu-container container">
+            <div id="instructions">
+                <h3>Instrucciones</h3>
+                <p><strong>1. </strong>Seleccionar un punto en el mapa para analizar.</p>
+                <p><strong>2. </strong>Seleccionar el tipo de an&aacute;lisis a realizar.</p>
+                <p><strong>2.1. </strong>Cobertura FWA:<br/>
+                Explain
+                </p>
+                <p><strong>2.2. </strong>Negocios Potenciales:<br/>
+                    Explain
+                </p>
+                <p><strong>3. </strong>Hacer clic en <strong><i>Calcular</i></strong>.</p>
+			</div>
+			<div>
+			<text onclick="showFWA();">Cobertura FWA</text>
+			<button onclick="showBusiness();">Negocios Potenciales</button>
+			</div>
+			<!--<div id="input-container">-->
+			    <div ng-app="postserviceApp" ng-controller="postserviceCtrl">
+			    <!--Longitud : -->
+			    <input ng-model="longitud" id="longitud" style="visibility: hidden; position:absolute;"/>
+			    <!--Latitud : -->
+			    <input ng-model="latitud" id="latitud" style="visibility: hidden;position:absolute;"/>
+			    <input ng-model="radio" id="radio" style="visibility: visible;position:absolute;" ng-click="dibujarCirculo()"/>
+			    <!--Respuesta : <input ng-model="respuesta"/><br/><br/>-->
+			    <input type="button" value="Enviar" ng-click="postdata(longitud, latitud); myImagen()" style="background: #5BC500;border-radius: 4px;color: #FFFFFF;border: none;margin: 5px;padding: 10px;cursor: pointer;font-family: Telefonica-Bold;"/>
+			    <div  class="popup" ><span class="popuptext" id="myPopup" onclick="getElementById('myPopup').style.visibility = 'hidden'; ">{{DispFWA}}</span></div>
+			    <input type="button" value="Enviar Negocios" ng-click="postdata(longitud, latitud,radio); myImagen()" style="background: #5BC500;border-radius: 4px;color: #FFFFFF;border: none;margin: 5px;padding: 10px;cursor: pointer;font-family: Telefonica-Bold;"/>
+			    <div  class="popup" ><span class="popuptext" id="myPopup" onclick="getElementById('myPopup').style.visibility = 'hidden'; ">{{EmprFWA}}</span></div>
+			   <p>Output Message : {{msg}}</p>
+		    <!--<p>StatusCode: {{statusval}}</p>-->
+		    <!--<p>Status: {{statustext}}</p>-->
+		    <!--<p>Response Headers: {{headers}}</p>-->
+		    <p>Response Headers: {{longitud}}</p>
+		    <p>Response Headers: {{latitud}}</p>
+		    <p>Response Headers: {{EmprFWA}}</p>
+		    <p>Radio Enviado: {{radio}}</p>
+		    <!--<p>Response Headers: {{DispFWA}}</p>-->
+		    <!--</div>-->
+		    </div>
+        </div>
+        <div class="content-container container">
+            <input id="pac-input" class="controls" type="text" placeholder="Search Box">
+            <div id="map"></div>
+            <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=[KEY DE GOOGLE]&libraries=places&callback=initMap">
+            </script>
+        </div>
+    <!--<input type="button" value="Send" ng-click="postdata(longitud, latitud)" /> <br/><br/>-->
+<!--<p>Response Headers: {{respuesta}}</p>-->
+    </div>
+    <div class="footer">
+        <span class="reserved">© 2017 Movistar. Todos los derechos reservados.</span>
+        <div class="logo right">
+            <img src="imgs/logo-telefonica.png" alt="telefonica">
+        </div>
+    </div>
+</body>
+</html>
