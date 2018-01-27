@@ -70,7 +70,7 @@ class Map(models.Model):
     #@property
     def DispFWA(self):
         s=int(np.random.uniform(1,100000,1))
-        dir="/home/ubuntu/workspace/gigfinder/retail/Layer/pruebas_"+str(s)
+        dir="[Ligar en donde se guardan los archivos temporales]"+str(s)
         #if os.path.exists(dir)==True:
         #    s=int(np.random.uniform(1,100000,1))
         #    dir=os.getcwd()+"_"+str(s)
@@ -97,7 +97,7 @@ class Map(models.Model):
         point.crs = from_epsg(4326)
         point = point.to_crs({'init': 'epsg:4326'}) 
         #poly  = geopandas.GeoDataFrame.from_file('LTE_Coverage_py.shp')
-        poly  = geopandas.GeoDataFrame.from_file('/home/ubuntu/workspace/gigfinder/retail/Layer/LTE_Coverage_py.shp')
+        poly  = geopandas.GeoDataFrame.from_file('[Layer de Disponibilidad de ]')
         poly.crs = from_epsg(4326)
         poly = poly.to_crs({'init': 'epsg:4326'})
         pointInPolys = sjoin(point, poly, how='left')
